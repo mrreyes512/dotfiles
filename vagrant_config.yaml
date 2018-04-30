@@ -6,3 +6,4 @@ configs:
     hostname: 'dotfiles-test'
     username: 'mreyes'
     encrypted_pass: '$1$/el/UAqR$RXZeRMg.eVCwCYdMmTTDD.'
+    sudo: true

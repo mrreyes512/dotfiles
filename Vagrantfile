@@ -1,7 +1,7 @@
 # encoding: utf-8
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-# Modify bagrant_config.yaml to make adjustmets to username / pass 
+# Modify vagrant_config.yaml to make adjustmets
 
 require 'yaml'
 
@@ -16,6 +16,12 @@ Vagrant.configure("2") do |config|
   config.vm.define vagrant_config['hostname']
   config.vm.hostname = vagrant_config['hostname']
 
+  # Disable usb - minimal vagrant box had error with usb enabled
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--usb", "on"]
+    vb.customize ["modifyvm", :id, "--usbehci", "off"]
+  end
+
   # Start with a fresh user profile
   # MUST USE SINGLE QUOTES BELOW DUE TO PASSWORD FIELD
   config.vm.provision "shell", inline: <<-EOC
@@ -23,10 +29,16 @@ Vagrant.configure("2") do |config|
     sudo useradd -m -p '#{password}' -s /bin/bash '#{username}'
   EOC
 
-  # Disable usb - minimal vagrant box had error with usb enabled
-  config.vm.provider "virtualbox" do |vb|
-    vb.customize ["modifyvm", :id, "--usb", "on"]
-    vb.customize ["modifyvm", :id, "--usbehci", "off"]
+  if vagrant_config["sudo"] == true
+    config.vm.provision "shell", inline: <<-EOC
+      sudo usermod -aG sudo '#{username}' || exit 0
+      sudo usermod -aG wheel '#{username}' || exit 0
+    EOC
   end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "site.yaml"
+  end
+
 
 end

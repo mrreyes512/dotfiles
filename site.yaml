@@ -1,0 +1,13 @@
+---
+# Playbook: Setup My Environment
+# Description: Setup my custom environment with my .zshrc, .vimrc, and .aliases
+# Requirements:
+#     - zsh
+#     - vim > 7.4
+#     - figlet (for banner)
+
+- name: Setup My Environment
+  hosts: "{{ target_host | default('local') }}"
+  roles:
+    - new_host
+    # - my_enviornment
