@@ -1,0 +1,32 @@
+# Inventory File : inventory_pi
+# Credentials will be stored in ./group_vars/credential-[NAME].yaml
+# -----------------------------------
+
+# pi Cluster
+[cluster]
+piDAK-manager-01     ansible_host=192.168.200.130   ansible_connection=ssh
+piDAK-worker-01      ansible_host=192.168.200.131   ansible_connection=ssh
+piDAK-worker-02      ansible_host=192.168.200.132   ansible_connection=ssh
+piDAK-worker-03      ansible_host=192.168.200.133   ansible_connection=ssh
+
+# pi Gateway
+[gateway]
+piDAK-gw  ansible_host=192.168.200.134   ansible_connection=ssh
+
+[credential-mreyes:children]
+cluster
+gateway
+
+#[credential-pi:children]
+#cluster
+#gateway
+
+
+# Local Dev Environments
+# -----------------------------------
+
+[local]
+vagrant ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_port=2222
+
+[credential-mreyes:children]
+local
