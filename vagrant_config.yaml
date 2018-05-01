@@ -3,7 +3,8 @@
 
 configs:
     vagrant_box: 'minimal/trusty64'
-    hostname: 'dotfiles-test'
+    # NOTE: If hostname is changed, the entry in inventory and playbooks should match
+    hostname: 'dotfiles-dev'
     username: 'mreyes'
     encrypted_pass: '$1$/el/UAqR$RXZeRMg.eVCwCYdMmTTDD.'
     sudo: true

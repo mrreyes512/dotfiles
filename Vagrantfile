@@ -8,6 +8,7 @@ require 'yaml'
 current_dir    = File.dirname(File.expand_path(__FILE__))
 configs        = YAML.load_file("#{current_dir}/vagrant_config.yaml")
 vagrant_config = configs['configs']
+hostname       = configs['configs']['hostname']
 username       = configs['configs']['username']
 password       = configs['configs']['encrypted_pass']
 
@@ -41,6 +42,9 @@ Vagrant.configure("2") do |config|
     ansible.compatibility_mode = "2.0"
     ansible.inventory_path = "inventory/hosts"
     ansible.playbook = "site.yaml"
+    ansible.extra_vars = {
+      target_host: "#{hostname}"
+    }
   end
 
 

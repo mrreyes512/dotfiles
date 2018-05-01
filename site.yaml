@@ -8,7 +8,7 @@
 
 - name: Setup My Environment
   # hosts: all
-  hosts: "{{ target_host | default('dotfiles-test') }}"
+  hosts: "{{ target_host | default('local') }}"
   roles:
     - new_host
     - my_enviornment
