@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Start with a fresh user profile
-  # MUST USE SINGLE QUOTES BELOW DUE TO PASSWORD FIELD
+  # NOTE: MUST USE SINGLE QUOTES BELOW DUE TO PASSWORD FIELD
   config.vm.provision "shell", inline: <<-EOC
     sudo userdel -r '#{username}' 2> /dev/null
     sudo useradd -m -p '#{password}' -s /bin/bash '#{username}'
@@ -36,13 +36,10 @@ Vagrant.configure("2") do |config|
     EOC
   end
 
+  # NOTE: You must have a host in your inventory to match vagrant defined name!!
   config.vm.provision "ansible" do |ansible|
     ansible.compatibility_mode = "2.0"
-    # ansible.inventory_path = "inventory/hosts"
-    # ansible.config_file = "ansible.cfg"
-    ansible.groups = {
-      "local" => ["vagrant"]
-    }
+    ansible.inventory_path = "inventory/hosts"
     ansible.playbook = "site.yaml"
   end
 

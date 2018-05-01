@@ -17,7 +17,7 @@ piDAK-gw  ansible_host=192.168.200.134   ansible_connection=ssh
 # Local Dev Environments
 # -----------------------------------
 [local]
-vagrant ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_port=2222
+dotfiles-test ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_port=2222
 
 
 # Credentials
