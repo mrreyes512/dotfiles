@@ -10,5 +10,8 @@
   # hosts: all
   hosts: "{{ target_host | default('local') }}"
   roles:
-    - new_host
-    - my_enviornment
+    - role: new_host
+      tags: new_host
+
+    - role: my_enviornment
+      tags: my_env
