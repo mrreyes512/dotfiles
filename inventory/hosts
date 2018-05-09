@@ -13,6 +13,10 @@ piDAK-worker-03      ansible_host=192.168.200.133   ansible_connection=ssh
 [gateway]
 piDAK-gw  ansible_host=192.168.200.134   ansible_connection=ssh
 
+# Work Boxes:
+# -----------------------------------
+[work]
+ausftxhd1vw   ansible_host=97.105.228.228
 
 # Local Dev Environments
 # -----------------------------------
@@ -26,3 +30,4 @@ dotfiles-dev ansible_ssh_host=127.0.0.1 ansible_connection=ssh ansible_ssh_port=
 local
 cluster
 gateway
+work
