@@ -146,7 +146,7 @@ if [[ -n $SSH_CONNECTION ]]; then
  else
 		# Settings when .zshrc executed locally
    export EDITOR='vim'
-   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+   source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
  fi
 
 # ZSH Autosuggest mapping

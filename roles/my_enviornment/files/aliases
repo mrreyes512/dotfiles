@@ -183,8 +183,8 @@ alias vdown='vagrant halt'
 alias vd='vagrant halt'
 alias vs='vagrant status'
 alias vssh='vagrant ssh'
-alias vdestroy ='vagrant destroy'
-alias vkill ='vagrant destroy'
+alias vdestroy='vagrant destroy'
+alias vkill='vagrant destroy'
 alias vgs='vagrant global-status'
 
 
