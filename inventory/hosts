@@ -2,7 +2,15 @@
 # Credentials will be stored in ./group_vars/credential-[NAME].yaml
 # -----------------------------------
 
+# New Pi:
+# -----------------------------------
+[new_pi]
+piVAC-ap      ansible_host=192.168.100.153   ansible_connection=ssh
+piVAC-plex    ansible_host=192.168.100.196   ansible_connection=ssh
+piVAC-client  ansible_host=192.168.100.151   ansible_connection=ssh
+
 # pi Cluster
+# -----------------------------------
 [cluster]
 piDAK-manager-01     ansible_host=192.168.200.130   ansible_connection=ssh
 piDAK-worker-01      ansible_host=192.168.200.131   ansible_connection=ssh
@@ -31,3 +39,7 @@ local
 cluster
 gateway
 work
+new_pi
+
+#[credential-pi:children]
+#new_pi
