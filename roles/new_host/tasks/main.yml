@@ -1,0 +1,41 @@
+---
+# tasks file for new_host
+
+
+# System Upates
+# -----------------------------------------------------------------------------
+- name: Install system updates for CentOS systems
+  become: true
+  yum: name=* state=latest update_cache=yes
+  when: ansible_distribution == "CentOS"
+  tags: [sudo, update]
+  register: new_host
+
+- name: Install system updates for Ubuntu and Debian systems
+  become: true
+  apt: upgrade=dist update_cache=yes
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+  tags: [sudo, update]
+  register: new_host
+
+
+# Packages
+# -----------------------------------------------------------------------------
+- name: Install list of packages
+  become: true
+  action: >
+    {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
+  with_items:
+    - vim
+    - tmux
+    - zsh
+    - figlet
+    - curl
+  tags: [sudo, install]
+  register: new_host
+
+
+# Debug
+# -----------------------------------------------------------------------------
+# - debug:
+#     var: new_host

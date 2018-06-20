@@ -1,0 +1,157 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+"================================================================
+" Vundle Config
+"================================================================
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'scrooloose/nerdTree'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'myusuf3/numbers.vim'
+Plugin 'edkolev/tmuxline.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'eshion/vim-sync'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mhinz/vim-signify'
+Plugin 'xolox/vim-notes'
+Plugin 'xolox/vim-misc'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+"================================================================
+" Airline settings
+"================================================================
+let g:airline_theme='jellybeans'
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tmuxline#enabled = 1
+"let g:airline_theme='base16color'
+"let g:tmuxline_theme = 'jellybeans'
+
+let g:airline_section_y = ''
+"let g:airline_section_z = 'line number, column number'
+
+"let g:notes_directories = ['~/owncloud/Notes', '~/owncloud/Work/Notes', '~/Andromeda/training' ]
+let g:notes_directories = ['~/owncloud/Notes', '~/Andromeda/training' ]
+set laststatus=2
+
+"================================================================
+" My settings
+"================================================================
+" change the mapleader from \ to ,
+let mapleader=","
+nnoremap ; :
+set nobackup
+set noswapfile
+
+syntax on
+colorscheme molokai
+set number
+set relativenumber
+"set listchars=tab:❯\ "
+"set list
+set hlsearch
+set incsearch     " show search matches as you type
+set clipboard=unnamed
+set nocompatible
+set hidden
+set shiftwidth=4  " number of spaces to use for autoindenting
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set showmatch     " set show matching parenthesis
+set ignorecase    " ignore case when searching
+set smartcase     " ignore case if search pattern is all lowercase,
+set history=1000         " remember more commands and search history
+set undolevels=1000      " use many muchos levels of undo
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set title                " change the terminal's title
+set mouse=a
+set nowrap
+
+" Clear the hlsearch of a word by: ,/
+nmap <silent> ,/ :set hlsearch! hlsearch?<CR>
+
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+nmap <S-Enter> O<Esc>
+nmap <CR> o<Esc>
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>rv :so $MYVIMRC<CR>
+
+" NERDTree remap
+nmap <leader>nt :NERDTree<cr>
+
+" Tab navigation like Firefox.
+nnoremap <S-tab>   :tabnext<CR>
+nnoremap th  :tabfirst<CR>
+nnoremap tj  :tabnext<CR>
+nnoremap tk  :tabprev<CR>
+nnoremap tl  :tablast<CR>
+nnoremap tt  :tabedit<CR>
+nnoremap tn  :tabnew<CR>
+nnoremap tm  :tabm<Space>
+nnoremap td  :tabclose<CR>
+
+"ide set up config
+nmap <leader>wp :w !python<cr>
+
+
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :NumbersOnOff<CR>
+nnoremap <F5> :set list!<CR>
+nnoremap <F6> :AirlineToggle<CR>
+nnoremap <F7> :GitGutterSignsToggle<CR>
+nnoremap <F1> :setlocal spell! spelllang=en_us<CR>
+
+"set listchars=tab:➪
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+"Fold mappings
+" auto save fold statements
+"au BufWinLeave * mkview
+"au BufWinEnter * silent loadview
+map zz za
+map zzz zR
+"set foldmethod=manual
+
+" Save last possition per file
+if has("autocmd")
+       au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+

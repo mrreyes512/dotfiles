@@ -1,0 +1,20 @@
+---
+# Clone repo's needed for OMZSH plugins
+
+- name: Create vundle directory
+  file:
+    path: ~/.vim/bundle
+    state: directory
+
+- name: Create vim color directory
+  file:
+    path: ~/.vim/colors
+    state: directory
+
+- name: Cloning VUNDLE
+  become: false
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+  register: cloning
+  tags: [git_pull]

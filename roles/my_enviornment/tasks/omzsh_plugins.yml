@@ -1,0 +1,34 @@
+---
+# Clone repo's needed for OMZSH plugins
+
+- name: Cloning OMZSH Powerlevel9k
+  become: false
+  git:
+    repo: https://github.com/bhilburn/powerlevel9k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
+  register: cloning
+  tags: [git_pull]
+
+- name: Cloning OMZSH Autosuggestions
+  become: false
+  git:
+    repo: git://github.com/zsh-users/zsh-autosuggestions.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  register: cloning
+  tags: [git_pull]
+
+- name: Cloning OMZSH Syntax Highlighting
+  become: false
+  git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+  register: cloning
+  tags: [git_pull]
+
+- name: Cloning ZSH-Completion
+  become: false
+  git:
+    repo: https://github.com/mrreyes512/zsh-completions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-completions
+  register: cloning
+  tags: [git_pull]

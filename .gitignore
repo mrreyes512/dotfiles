@@ -107,6 +107,5 @@ ENV/
 .vagrant/
 
 # Ansible Galexy Roles
-roles/
 
 files/id_rsa

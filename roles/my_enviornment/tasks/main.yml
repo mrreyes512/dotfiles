@@ -1,0 +1,98 @@
+---
+# tasks file for my_enviornment
+
+# Copy my public key
+# -----------------------------------------------------------------------------
+- name: Set authorized key took from file
+  authorized_key:
+    user: "{{ ansible_ssh_user }}"
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - files/id_rsa.pub
+  tags: [authorized_key,minimum]
+
+
+# Install Oh My ZSH and configure zshrc
+# -----------------------------------------------------------------------------
+- include: "clone_omzsh.yml"
+  tags: [omzsh]
+
+- include: "omzsh_plugins.yml"
+  tags: [omzsh_plugins]
+
+- name: Copy files/zshrc to ~/.zshrc
+  become: false
+  copy:
+    src: files/zshrc
+    dest: ~/.zshrc
+    backup: yes
+  tags: [zshrc]
+
+# TODO: this needs to be fixed to work with non-sudo access
+- name: Setting user shell to zsh
+  # command: chsh -s /bin/zsh "{{ ansible_ssh_user }}"
+  become: true
+  become_user: mreyes
+  user:
+    name: "{{ ansible_ssh_user }}"
+    shell: /bin/zsh
+  # when: cloning
+  register: chsh
+  ignore_errors: yes
+  tags: [set_shell, sudo]
+
+- debug:
+    msg: "Command: chsh -s /bin/zsh mreyes - Failed, issue in login"
+  when: "'FAILED' in chsh"
+
+
+# Install and configure VUNDLE
+# -----------------------------------------------------------------------------
+- include: "install_vundle.yml"
+  tags: [vundle]
+
+- name: Copy vim color to ~/.vim/color
+  copy:
+    src: files/molokai.vim
+    dest: ~/.vim/colors
+  tags: [vundle]
+
+- name: Copy files/vimrc to ~/.vimrc
+  copy:
+    src: files/vimrc
+    dest: ~/.vimrc
+    backup: yes
+  register: vimrc_copy
+  tags: [vundle, vimrc]
+
+- name: Install Vundle plugins
+  # command: vim -E -s -c "source ~/.vimrc" -c PluginInstall -c qa
+  command: vim -E -s -c "source ~/.vimrc" +PluginInstall +qall -V
+  tags: [vundle, vundle_plugins]
+  when: vimrc_copy
+  register: vundle_plugins
+  ignore_errors: yes
+  failed_when: "'Cannot find' in vundle_plugins.stderr"
+
+
+# Copy Aliases to new host
+# -----------------------------------------------------------------------------
+- name: Copy Aliases ~/.aliases
+  copy:
+    src: files/aliases
+    dest: ~/.aliases
+  tags: [alias,aliases,minimum]
+
+- name: Verify source is present in ~/.bashrc
+  lineinfile:
+    path: ~/.bashrc
+    regexp: '^aliases'
+    line: '[[ -f ~/.aliases ]] && . ~/.aliases'
+  tags: [alias,aliases,minimum]
+
+
+# Debug
+# -----------------------------------------------------------------------------
+# - debug:
+#     var: new_host
