@@ -1,0 +1,96 @@
+---
+# handlers file for dotfiles
+
+# --------------------------------
+# Copy SSH keys to remote ~/.ssh/authorized_keys if exist
+- name: Send SSH keys to authorized_keys
+  authorized_key:
+    user: "{{ ansible_ssh_user }}"
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - id_rsa.pub
+  listen: send_ssh_key
+
+# --------------------------------
+# Copy my vimrc && VUNDLE config
+- name: Get fresh copy of vimrc
+  local_action: command cp ~/.vimrc {{ role_path }}/files/vimrc
+  run_once: true
+  ignore_errors: yes
+  listen: send_vim_config
+
+- name: Copy vimrc file
+  copy: 
+    src: vimrc
+    dest: ~/.vimrc
+  listen: send_vim_config
+
+- name: Create ~/.vim directory
+  file: 
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - ~/.vim/bundle/
+    - ~/.vim/colors/
+  listen: send_vim_config
+
+# TODO: Can Vundle install molokai?
+- name: Copy colors file
+  copy: 
+    src: molokai.vim
+    dest: ~/.vim/colors/
+  listen: send_vim_config
+
+- name: Install VUNDLE
+  become: false
+  git:
+    repo: https://github.com/VundleVim/Vundle.vim.git
+    dest: ~/.vim/bundle/Vundle.vim
+  listen: send_vim_config
+
+- name: Clone VUNDLE plugins
+  command: vim -E -s -c "source ~/.vimrc" +PluginInstall +qall -V
+  ignore_errors: yes
+  # failed_when: "'Cannot find' in vundle_plugins.stderr"
+  listen: send_vim_config
+
+# --------------------------------
+# Send my ZSH config
+- name: Get fresh copy of ~/.zshrc
+  local_action: command cp ~/.zshrc {{ role_path }}/files
+  run_once: true
+  listen: send_zsh_config
+
+- name: Copy ~/.zshrc file
+  copy: 
+    src: zshrc
+    dest: ~/.zshrc
+    backup: true
+  listen: send_zsh_config
+
+# Clone OHMYZSH
+- name: Installing oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: ~/.oh-my-zsh
+    update: true
+  listen: send_zsh_config
+
+- name: Clone OZSH plugins
+  include_tasks: omzsh_plugins.yml
+  listen: send_zsh_config
+
+- name: Setting user shell to zsh
+  # command: chsh -s /bin/zsh "{{ ansible_ssh_user }}"
+  become: true
+  user:
+    name: "{{ ansible_ssh_user }}"
+    shell: /bin/zsh
+  listen: send_zsh_config
+
+# - name: Update ohmzsh
+#   command: git pull origin master
+#   args:
+#     chdir: ~/.oh-my-zsh
+#   tags: test

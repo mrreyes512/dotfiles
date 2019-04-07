@@ -1,0 +1,46 @@
+---
+############################################
+# This will:
+# * Set my new password
+# * Copy my SSH keys for authorized_keys
+# * Copy my ~/aliases
+# * Add source my aliases to ~/.bashrc
+# * Copy my vimrc && vim_colors
+# * Clone Vundle
+############################################
+
+# Prompt user for IP/User and set in group: just_created
+# - import_playbook: prompt_user_for_host.yml 
+#   when: target is undefined
+#   tags: test
+
+# Do the work
+- name: Set My Environment
+  hosts: "{{ target | default('just_created') }}"
+  gather_facts: False
+  tasks:
+  - include_role: 
+      name: dotfiles
+    vars:
+      MY_PACKAGES: [ git, vim, zsh, figlet ]
+      UPDATE_CACHE: true
+      # SSH_KEYS: "~/.ssh/id_rsa"
+      # NEW_PASSWORD: !vault |
+      #     $ANSIBLE_VAULT;1.1;AES256
+      #     32323864666236613536323438656230313535616564313561356530326338613364613430623335
+      #     6339613564363263306137353133626361653831333733660a373236666165386437316161616635
+      #     34353566643636353262623233653561393161346133393937316134646137333839383137643161
+      #     3237656465633762320a616433313465646662616434623534636536396330616464663734663662
+      #     3539
+  tags: test
+  
+
+  # - include_role: 
+  #     name: dotfiles
+  #     tasks_from: sudo_main
+  #   vars:
+  #     MY_PACKAGES: [ git, vim, zsh, figlet ]
+  #     UPDATE_CACHE: true
+  #   when: '"y" in sudo_attempt'
+  #   tags: test
+

@@ -1,0 +1,61 @@
+---
+############################################
+# This will:
+# * Set my new password
+# * Copy my SSH keys for authorized_keys
+# * Copy my ~/aliases
+# * Add source my aliases to ~/.bashrc
+# * Copy my vimrc && vim_colors
+# * Clone Vundle
+############################################
+
+# --------------------------------
+# Set new password using var: NEW_PASSWORD
+
+# --------------------------------
+# Copy SSH keys to remote ~/.ssh/authorized_keys
+- name: Get fresh copy of ~/.ssh/id_rsa
+  local_action: command cp ~/.ssh/id_rsa.pub {{ role_path }}/files
+  run_once: true
+  ignore_errors: yes
+  notify: send_ssh_key
+
+# --------------------------------
+# Set up my aliases
+- name: Copy aliases file
+  copy: 
+    src: aliases
+    dest: ~/.aliases
+
+- name: Add source to ~/.aliases in ~/.bashrc
+  lineinfile:
+    path: ~/.bashrc
+    insertafter: EOF
+    line: "[[ -f ~/.aliases ]] && source ~/.aliases"
+    backup: yes
+
+# --------------------------------
+# Install MY_PACKAGES
+- name: Sudo Install My Packages
+  apt: 
+    pkg: "{{ item }}"
+    state: present
+    update_cache: "{{ UPDATE_CACHE }}"
+  with_items: "{{ MY_PACKAGES }}"
+  become: true
+  when: '"y" in sudo_attempt'
+  notify: 
+    - apps_installed
+  tags: test
+
+# Does VIM exist?
+- name: Is VIM installed?
+  command: vim --version
+  ignore_errors: yes
+  notify: send_vim_config
+
+# Does ZSH exist?
+- name: Is ZSH installed?
+  command: zsh --version
+  ignore_errors: yes
+  notify: send_zsh_config

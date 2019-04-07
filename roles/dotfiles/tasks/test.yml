@@ -1,0 +1,6 @@
+- name: echo sequence
+  shell: "{{ MY_CMD }}"
+  register: echo
+
+- debug: 
+    var: echo.stdout
