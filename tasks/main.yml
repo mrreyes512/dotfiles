@@ -11,11 +11,17 @@
 
 # --------------------------------
 # Set new password using var: NEW_PASSWORD
+# - name: Set new password for user
+#   become: true
+#   user:
+#     name: "{{ ansible_ssh_user }}"
+#     update_password: always
+#     password: "{{ NEW_PASSWORD }}"
 
 # --------------------------------
 # Copy SSH keys to remote ~/.ssh/authorized_keys
 - name: Get fresh copy of ~/.ssh/id_rsa
-  local_action: command cp ~/.ssh/id_rsa.pub {{ role_path }}/files
+  local_action: command cp {{ SSH_PUBLIC_ID }} {{ role_path }}/files
   run_once: true
   ignore_errors: yes
   notify: send_ssh_key
@@ -44,9 +50,6 @@
   with_items: "{{ MY_PACKAGES }}"
   become: true
   when: '"y" in sudo_attempt'
-  notify: 
-    - apps_installed
-  tags: test
 
 # Does VIM exist?
 - name: Is VIM installed?

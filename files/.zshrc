@@ -48,7 +48,8 @@ plugins=(
 # -------------------------------------------------------------------
 # PATH
 export PATH="/Volumes/Home/mrreyes512/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/ec2/ec2-api-tools-1.7.5.1/bin:/Applications/Postgres.app/Contents/Versions/latest/bin"
-export HOMEBREW_GITHUB_API_TOKEN="ddf7f4d21a4e9c97405f62ae69d2f220f986d005"
+#export HOMEBREW_GITHUB_API_TOKEN="ddf7f4d21a4e9c97405f62ae69d2f220f986d005"
+export HOMEBREW_GITHUB_API_TOKEN="9f44be117ed3948d17f0997145afaf0e3dbfbe4d"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Sources
