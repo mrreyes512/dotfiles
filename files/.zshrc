@@ -9,6 +9,7 @@ export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 ZSH_THEME="powerlevel9k/powerlevel9k"
+#ZSH_THEME="aphrodite"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
@@ -18,7 +19,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+#COMPLETION_WAITING_DOTS="true"
 
 # HIST_STAMPS="mm/dd/yyyy"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
@@ -47,7 +48,8 @@ plugins=(
 # -------------------------------------------------------------------
 # PATH
 export PATH="/Volumes/Home/mrreyes512/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/ec2/ec2-api-tools-1.7.5.1/bin:/Applications/Postgres.app/Contents/Versions/latest/bin"
-export HOMEBREW_GITHUB_API_TOKEN="2a1a842f207f67dcac6fbc34bdaab43d40c26b1b"
+#export HOMEBREW_GITHUB_API_TOKEN="ddf7f4d21a4e9c97405f62ae69d2f220f986d005"
+export HOMEBREW_GITHUB_API_TOKEN="9f44be117ed3948d17f0997145afaf0e3dbfbe4d"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Sources
@@ -104,6 +106,7 @@ ZSH_HIGHLIGHT_STYLES[assign]='fg=yellow'
 # https://github.com/bhilburn/powerlevel9k
 # Powerlevel Prompt options
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="\n\e[1D"
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%n ❯ "
 

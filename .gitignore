@@ -109,3 +109,4 @@ ENV/
 # Ansible Galexy Roles
 
 files/id_rsa
+.git

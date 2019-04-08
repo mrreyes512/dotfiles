@@ -59,8 +59,6 @@ let g:airline#extensions#tmuxline#enabled = 1
 let g:airline_section_y = ''
 "let g:airline_section_z = 'line number, column number'
 
-"let g:notes_directories = ['~/owncloud/Notes', '~/owncloud/Work/Notes', '~/Andromeda/training' ]
-let g:notes_directories = ['~/owncloud/Notes', '~/Andromeda/training' ]
 set laststatus=2
 
 "================================================================
