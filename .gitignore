@@ -111,3 +111,4 @@ ENV/
 files/id_rsa
 .git
 .galaxy_install_info
+ansible.cfg

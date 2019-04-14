@@ -5,9 +5,15 @@ python:
 
 before_script:
   - pip install -r requirements.txt
+  - mv tests/.travis_ansible.cfg ansible.cfg
+  - mv tests/files/testing_key_rsa.pub tests/files/id_rsa.pub
+  - mv tests/files .
 
 script:
   - ansible --version
   - ansible-lint ./*/*.yml -v
+  - ansible-playbook tests/test.yml --connection=local --become
 
+notifications:
+    webhooks: https://galaxy.ansible.com/api/v1/notifications/
 # Ref: https://devhints.io/travis

@@ -4,13 +4,13 @@
 # --------------------------------
 # Send my vimrc && VUNDLE config
 - name: Send (my)vimrc file
-  copy: 
+  copy:
     src: "{{ playbook_dir }}/../files/vimrc"
     dest: ~/.vimrc
   listen: send_vim_config
 
 - name: Create ~/.vim directory
-  file: 
+  file:
     path: "{{ item }}"
     state: directory
   with_items:
@@ -20,7 +20,7 @@
 
 # TODO: Can Vundle install molokai?
 - name: Send VIM colors file
-  copy: 
+  copy:
     src: "{{ playbook_dir }}/../files/molokai.vim"
     dest: ~/.vim/colors/
   listen: send_vim_config
@@ -41,7 +41,7 @@
 # --------------------------------
 # Send my ZSH config
 - name: Send (my)zshrc file
-  copy: 
+  copy:
     src: "{{ playbook_dir }}/../files/zshrc"
     dest: ~/.zshrc
     backup: true
