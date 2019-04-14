@@ -2,27 +2,10 @@
 # handlers file for dotfiles
 
 # --------------------------------
-# Copy SSH keys to remote ~/.ssh/authorized_keys if exist
-- name: Send SSH keys to authorized_keys
-  authorized_key:
-    user: "{{ ansible_ssh_user }}"
-    state: present
-    key: "{{ item }}"
-  with_file:
-    - id_rsa.pub
-  listen: send_ssh_key
-
-# --------------------------------
-# Copy my vimrc && VUNDLE config
-- name: Get fresh copy of vimrc
-  local_action: command cp ~/.vimrc {{ role_path }}/files/
-  run_once: true
-  ignore_errors: yes
-  listen: send_vim_config
-
-- name: Copy vimrc file
+# Send my vimrc && VUNDLE config
+- name: Send (my)vimrc file
   copy: 
-    src: .vimrc
+    src: "{{ playbook_dir }}/../files/vimrc"
     dest: ~/.vimrc
   listen: send_vim_config
 
@@ -36,9 +19,9 @@
   listen: send_vim_config
 
 # TODO: Can Vundle install molokai?
-- name: Copy colors file
+- name: Send VIM colors file
   copy: 
-    src: molokai.vim
+    src: "{{ playbook_dir }}/../files/molokai.vim"
     dest: ~/.vim/colors/
   listen: send_vim_config
 
@@ -57,14 +40,9 @@
 
 # --------------------------------
 # Send my ZSH config
-- name: Get fresh copy of ~/.zshrc
-  local_action: command cp ~/.zshrc {{ role_path }}/files/
-  run_once: true
-  listen: send_zsh_config
-
-- name: Copy ~/.zshrc file
+- name: Send (my)zshrc file
   copy: 
-    src: .zshrc
+    src: "{{ playbook_dir }}/../files/zshrc"
     dest: ~/.zshrc
     backup: true
   listen: send_zsh_config
