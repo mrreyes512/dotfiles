@@ -12,11 +12,13 @@ before_script:
 script:
   - ansible --version
   - ansible-lint -v ./*/*.yml -x 404,401,301
-  - ansible-playbook tests/test.yml --force-handlers
-  - ansible-playbook tests/test.yml --force-handlers
-    # | grep -q 'changed=0.*failed=0'
-    # && (echo 'Idempotence test: pass' && exit 0)
-    # || (echo 'Idempotence test: fail' && exit 1)
+  - ansible-playbook tests/test.yml --connection=local --force-handlers
+  - >
+    ansible-playbook tests/test.yml --connection=local --force-handlers
+    | grep -q 'changed=2.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+  # grepping for changed=2 due to vim and zsh tests in tasks/main
 
 notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
