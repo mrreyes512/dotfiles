@@ -5,4 +5,4 @@
     - role: dotfiles
       vars:
         MY_PACKAGES: [ git, vim, zsh, figlet ]
-        UPDATE_CACHE: true
+        UPDATE_CACHE: false
