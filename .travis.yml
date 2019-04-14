@@ -4,10 +4,11 @@ python:
   - '3.5'
 
 before_script:
-  - pip install -r requirements.txt
+  - mv tests/requirements.txt requirements.txt
   - mv tests/.travis_ansible.cfg ansible.cfg
   - mv tests/files/testing_key_rsa.pub tests/files/id_rsa.pub
   - mv tests/files .
+  - pip install -r requirements.txt
 
 script:
   - ansible --version
