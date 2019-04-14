@@ -13,7 +13,15 @@ script:
   - ansible --version
   - ansible-lint -v ./*/*.yml -x 404,401,301
   - ansible-playbook tests/test.yml --connection=local --become
+  - >
+    ansible-playbook tests/test.yml --connection=local --become
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
 
 notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
-# Ref: https://devhints.io/travis
+
+# Ref: 
+# * https://devhints.io/travis
+# * https://www.jeffgeerling.com/blog/testing-ansible-roles-travis-ci-github
