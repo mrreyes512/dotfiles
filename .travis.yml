@@ -1,0 +1,13 @@
+language: python
+
+python:
+  - '3.5'
+
+before_script:
+  - pip install -r requirements.txt
+
+script:
+  - ansible --version
+  - ansible-lint ./*/*.yml -v
+
+# Ref: https://devhints.io/travis
