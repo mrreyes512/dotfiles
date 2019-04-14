@@ -10,27 +10,20 @@
 ############################################
 
 # --------------------------------
-# Set new password using var: NEW_PASSWORD
-# - name: Set new password for user
-#   become: true
-#   user:
-#     name: "{{ ansible_ssh_user }}"
-#     update_password: always
-#     password: "{{ NEW_PASSWORD }}"
-
-# --------------------------------
-# Copy SSH keys to remote ~/.ssh/authorized_keys
-- name: Get fresh copy of ~/.ssh/id_rsa
-  local_action: command cp {{ SSH_PUBLIC_ID }} {{ role_path }}/files
-  run_once: true
-  ignore_errors: yes
-  notify: send_ssh_key
+# Copy SSH keys to remote ~/.ssh/authorized_keys if exist
+- name: Send SSH keys to authorized_keys
+  authorized_key:
+    user: "{{ ansible_ssh_user }}"
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - "{{ playbook_dir }}/../files/id_rsa.pub"
 
 # --------------------------------
 # Set up my aliases
-- name: Copy aliases file
+- name: Send (my).aliases file
   copy: 
-    src: aliases
+    src: "{{ playbook_dir }}/../files/aliases"
     dest: ~/.aliases
 
 - name: Add source to ~/.aliases in ~/.bashrc
