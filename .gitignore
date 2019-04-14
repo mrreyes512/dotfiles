@@ -108,6 +108,7 @@ ENV/
 
 # Ansible Galexy Roles
 
-files/id_rsa
+files/
 .git
 .galaxy_install_info
+ansible.cfg

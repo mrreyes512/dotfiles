@@ -1,6 +1,8 @@
 galaxy_info:
   author: Mark Reyes
-  description: I like stuff. I like my stuff a certain way. Some may say that 300+ aliases and functions is too many... to those I say you haven't turely embraced life until you've given my lazy aliases a shot. If you don't like them, fine then... go away. If you have questions, or want to contribute, great.
+  description: |
+    I like stuff. I like my stuff a certain way. Some may say that 300+ aliases and functions is too many... to those I say you haven't turely embraced life
+    until you've given my lazy aliases a shot. If you don't like them, fine then... go away. If you have questions, or want to contribute, great.
   company: Oden Development Incorporated
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -14,7 +16,7 @@ galaxy_info:
   # - GPLv3
   # - Apache
   # - CC-BY
-  license: license (GPLv2, CC-BY, etc)
+  license: BSD
 
   min_ansible_version: 1.2
 

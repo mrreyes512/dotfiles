@@ -22,7 +22,7 @@
 # --------------------------------
 # Set up my aliases
 - name: Send (my).aliases file
-  copy: 
+  copy:
     src: "{{ playbook_dir }}/../files/aliases"
     dest: ~/.aliases
 
@@ -36,11 +36,12 @@
 # --------------------------------
 # Install MY_PACKAGES
 - name: Sudo Install My Packages
-  apt: 
-    pkg: "{{ item }}"
+  apt:
+    pkg: "{{ MY_PACKAGES }}"
+    # pkg: "{{ item }}"
     state: present
     update_cache: "{{ UPDATE_CACHE }}"
-  with_items: "{{ MY_PACKAGES }}"
+  # with_items: "{{ MY_PACKAGES }}"
   become: true
   when: '"y" in sudo_attempt'
 
