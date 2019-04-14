@@ -2,4 +2,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - dotfiles
+    - role: dotfiles
+      vars:
+        MY_PACKAGES: [ git, vim, zsh, figlet ]
+        UPDATE_CACHE: true
