@@ -11,7 +11,7 @@ before_script:
 
 script:
   - ansible --version
-  - ansible-lint ./*/*.yml -v
+  - ansible-lint ./*/*.yml -v -x 404,401,301
   - ansible-playbook tests/test.yml --connection=local --become
 
 notifications:
